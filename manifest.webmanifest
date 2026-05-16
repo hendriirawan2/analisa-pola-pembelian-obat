@@ -1,0 +1,34 @@
+{
+  "name": "Analisa Pola Pembelian Obat",
+  "short_name": "Apriori Obat",
+  "description": "Aplikasi Apriori untuk analisa pola pembelian obat Apotek SMF 1 Duku.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0f9f8f",
+  "categories": ["productivity", "business", "medical"],
+  "icons": [
+    {
+      "src": "assets/logo-smf.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard Apriori",
+      "short_name": "Dashboard",
+      "url": "./index.html",
+      "icons": [{ "src": "assets/logo-smf.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Database Transaksi",
+      "short_name": "Database",
+      "url": "./database.html",
+      "icons": [{ "src": "assets/logo-smf.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}

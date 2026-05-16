@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Database Analisa Pola Pembelian Obat</title>
+    <meta name="theme-color" content="#0f9f8f" />
+    <meta name="description" content="Halaman database transaksi untuk aplikasi farmasi." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/logo-smf.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/logo-smf.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="database-page">
+    <section id="dbLoginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="login-brand">
+          <img src="assets/logo-smf.svg" alt="Logo SMF" />
+          <div>
+            <span>Apotek SMF 1 Duku</span>
+            <strong>Login Database</strong>
+          </div>
+        </div>
+        <form id="dbLoginForm" class="login-form">
+          <label for="dbUsernameInput">Username</label>
+          <input id="dbUsernameInput" type="text" autocomplete="username" value="admin" />
+
+          <label for="dbPasswordInput">Password</label>
+          <input id="dbPasswordInput" type="password" autocomplete="current-password" value="admin123" />
+
+          <p id="dbLoginMessage" class="login-message" aria-live="polite"></p>
+          <button type="submit" class="primary">Masuk Database</button>
+        </form>
+        <p class="login-hint">Default login: admin / admin123</p>
+      </div>
+    </section>
+
+    <main class="database-shell">
+      <header class="database-hero">
+        <div class="database-title">
+          <img src="assets/logo-smf.svg" alt="Logo SMF" />
+          <div>
+            <p class="eyebrow">Database Online</p>
+            <h1>Analisa Pola Pembelian Obat</h1>
+            <p class="subheading">Edit data transaksi dan simpan langsung ke Google Sheets.</p>
+          </div>
+        </div>
+        <div class="clock-card">
+          <span id="dbClockDate">-</span>
+          <strong id="dbClockTime">--:--:--</strong>
+        </div>
+        <button id="dbInstallButton" type="button" hidden>Install App</button>
+        <button id="dbLogoutButton" type="button">Logout</button>
+      </header>
+
+      <section class="sheet-panel database-config">
+        <div class="sheet-copy">
+          <h2>Koneksi Google Sheets</h2>
+          <p>Tempel URL Web App dari Google Apps Script.</p>
+        </div>
+        <div class="sheet-controls">
+          <input id="dbSheetUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec" />
+          <button id="dbSaveUrlButton" type="button">Simpan URL</button>
+          <button id="dbLoadButton" type="button">Muat Data</button>
+          <button id="dbSaveButton" type="button" class="primary">Simpan Online</button>
+        </div>
+        <p id="dbStatus" class="sheet-status">Google Sheets belum dikonfigurasi.</p>
+      </section>
+
+      <section class="panel database-table-panel">
+        <div class="panel-heading">
+          <h2>Editor Database Transaksi</h2>
+          <div class="panel-actions">
+            <button id="dbAddRowButton" type="button" class="small-button">Tambah Baris</button>
+            <button id="dbDownloadCsvButton" type="button" class="small-button">Download CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID Transaksi</th>
+                <th>Nama Obat</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="dbRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <span>Hak Cipta Aplikasi</span>
+        <strong>By Hendri Irawan, M.Kom</strong>
+      </footer>
+    </main>
+
+    <script src="database.js"></script>
+    <script src="pwa.js"></script>
+  </body>
+</html>

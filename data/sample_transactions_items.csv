@@ -1,0 +1,9 @@
+transaction_id,items
+T001,"Paracetamol,Vitamin C,Obat Batuk"
+T002,"Paracetamol,Vitamin C"
+T003,"Obat Batuk,Vitamin C"
+T004,"Paracetamol,Obat Batuk"
+T005,"Paracetamol,Vitamin C,Obat Flu"
+T006,"Obat Flu,Vitamin C"
+T007,"Paracetamol,Vitamin C,Obat Batuk"
+T008,"Paracetamol,Obat Flu"

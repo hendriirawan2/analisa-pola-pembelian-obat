@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Analisa Pola Pembelian Obat</title>
+    <meta name="theme-color" content="#0f9f8f" />
+    <meta name="description" content="Aplikasi Apriori untuk analisa pola pembelian obat Apotek SMF 1 Duku." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/logo-smf.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="login-brand">
+          <img src="assets/logo-smf.svg" alt="Logo SMF" />
+          <div>
+            <span>Apotek SMF 1 Duku</span>
+            <strong>Analisa Pola Pembelian Obat</strong>
+          </div>
+        </div>
+        <form id="loginForm" class="login-form">
+          <label for="usernameInput">Username</label>
+          <input id="usernameInput" value="admin" autocomplete="username" />
+          <label for="passwordInput">Password</label>
+          <input id="passwordInput" type="password" value="admin123" autocomplete="current-password" />
+          <p id="loginMessage" class="login-message"></p>
+          <button class="primary" type="submit">Masuk Dashboard</button>
+        </form>
+        <p class="login-hint">Default login: admin / admin123</p>
+      </div>
+    </section>
+
+    <section id="analysisOverlay" class="analysis-overlay hidden">
+      <div class="analysis-card">
+        <img src="assets/logo-smf.svg" alt="Logo SMF" />
+        <p class="eyebrow">Memproses Apriori</p>
+        <h2>Pengertian Apriori untuk Pembelian Obat</h2>
+        <p>
+          Apriori adalah algoritma untuk menemukan kombinasi obat yang sering dibeli bersamaan.
+          Aplikasi menghitung support, confidence, dan lift agar pola pembelian dapat dibaca sebagai
+          rekomendasi stok, paket obat, atau strategi penjualan.
+        </p>
+        <div class="progress-track"><span id="analysisProgressBar"></span></div>
+        <strong id="analysisProgressText">Menyiapkan transaksi...</strong>
+      </div>
+    </section>
+
+    <div id="appShell" class="app-shell locked">
+      <aside class="sidebar">
+        <div class="brand">
+          <img class="brand-logo" src="assets/logo-smf.svg" alt="Logo SMF" />
+          <div>
+            <strong>Analisa Pola Pembelian Obat</strong>
+            <span>Apotek SMF 1 Duku</span>
+          </div>
+        </div>
+        <nav class="nav-list">
+          <a class="active" href="#dashboard">Dashboard</a>
+          <a href="#transaksi">Transaksi</a>
+          <a href="#itemsets">Itemsets</a>
+          <a href="#rules">Rules</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header id="dashboard" class="topbar">
+          <div>
+            <p class="eyebrow">Market Basket Analysis</p>
+            <h1>Analisa Pola Pembelian Obat</h1>
+            <p class="subheading">Dashboard Apriori modern untuk membaca pola pembelian obat Apotek SMF 1 Duku.</p>
+          </div>
+          <div class="top-actions">
+            <div class="clock-card">
+              <span id="clockDate">-</span>
+              <strong id="clockTime">--:--:--</strong>
+            </div>
+            <button id="installButton" type="button" hidden>Install App</button>
+            <button id="templateButton" type="button">Template Excel</button>
+            <label class="upload-button">
+              <input id="csvInput" type="file" accept=".csv" />
+              Upload CSV
+            </label>
+            <button id="logoutButton" type="button">Logout</button>
+          </div>
+        </header>
+
+        <section class="control-panel">
+          <div class="field">
+            <label for="supportInput">Minimum Support</label>
+            <div class="input-row">
+              <input id="supportInput" type="range" min="0.1" max="0.9" step="0.05" value="0.3" />
+              <output id="supportValue">0.30</output>
+            </div>
+          </div>
+          <div class="field">
+            <label for="confidenceInput">Minimum Confidence</label>
+            <div class="input-row">
+              <input id="confidenceInput" type="range" min="0.1" max="1" step="0.05" value="0.6" />
+              <output id="confidenceValue">0.60</output>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="sampleButton" type="button">Data Contoh</button>
+            <button id="previewButton" type="button">Preview Lengkap</button>
+            <button id="analyzeButton" type="button" class="primary">Jalankan Analisis</button>
+            <button id="jsonButton" type="button">Simpan JSON</button>
+            <button id="pdfButton" type="button">Simpan PDF</button>
+          </div>
+        </section>
+
+        <section class="sheet-panel">
+          <div class="sheet-copy">
+            <h2>Google Sheets</h2>
+            <p>Simpan dan muat ulang transaksi online melalui Google Apps Script.</p>
+          </div>
+          <div class="sheet-controls">
+            <input id="sheetUrlInput" type="url" placeholder="Tempel URL Web App Google Apps Script" />
+            <button id="saveSheetUrlButton" type="button">Simpan URL</button>
+            <button id="loadSheetButton" type="button">Muat dari Sheets</button>
+            <button id="saveSheetButton" type="button" class="primary">Simpan ke Sheets</button>
+          </div>
+          <p id="sheetStatus" class="sheet-status">Google Sheets belum dikonfigurasi.</p>
+        </section>
+
+        <section class="metrics-grid">
+          <article class="metric"><span>Total Transaksi</span><strong id="transactionCount">0</strong></article>
+          <article class="metric"><span>Jenis Obat</span><strong id="medicineCount">0</strong></article>
+          <article class="metric"><span>Frequent Itemsets</span><strong id="itemsetCount">0</strong></article>
+          <article class="metric"><span>Aturan Asosiasi</span><strong id="ruleCount">0</strong></article>
+        </section>
+
+        <section class="status-strip">
+          <div><span>Status Data</span><strong id="dataStatus">Data contoh siap</strong></div>
+          <div><span>Analisis Terakhir</span><strong id="lastAnalyzed">-</strong></div>
+          <div><span>Format Upload</span><strong>CSV Excel</strong></div>
+          <div><span>Proses Apriori</span><strong id="aprioriStatus">Siap dijalankan</strong></div>
+        </section>
+
+        <section class="process-panel panel">
+          <div class="panel-heading"><h2>Alur Proses Apriori</h2><span>Preview analisis</span></div>
+          <div class="process-steps">
+            <div><strong>1</strong><span>Baca transaksi dari CSV, editor tabel, atau Google Sheets.</span></div>
+            <div><strong>2</strong><span>Gabungkan daftar obat berdasarkan ID transaksi.</span></div>
+            <div><strong>3</strong><span>Hitung support setiap kombinasi obat.</span></div>
+            <div><strong>4</strong><span>Bentuk rules dari confidence dan lift.</span></div>
+          </div>
+        </section>
+
+        <section class="charts-grid">
+          <div class="panel chart-panel">
+            <div class="panel-heading"><h2>Grafik Obat Terlaris</h2><span>Jumlah transaksi</span></div>
+            <canvas id="medicineChart"></canvas>
+          </div>
+          <div class="panel chart-panel">
+            <div class="panel-heading"><h2>Grafik Support Itemsets</h2><span>Top kombinasi</span></div>
+            <canvas id="supportChart"></canvas>
+          </div>
+        </section>
+
+        <section id="transaksi" class="section-grid">
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Data Transaksi</h2>
+              <div class="panel-actions">
+                <span id="dataSource">Sample CSV</span>
+                <button id="addRowButton" type="button" class="small-button">Tambah Baris</button>
+                <button id="applyEditButton" type="button" class="small-button primary">Terapkan Edit</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>ID Transaksi</th><th>Obat Dibeli</th><th>Aksi</th></tr></thead>
+                <tbody id="transactionRows"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel accent-panel">
+            <div class="panel-heading"><h2>Obat Terlaris</h2></div>
+            <div id="topMedicines" class="rank-list"></div>
+          </div>
+        </section>
+
+        <section id="itemsets" class="panel">
+          <div class="panel-heading"><h2>Frequent Itemsets</h2><span>Support</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Kombinasi Obat</th><th>Support</th></tr></thead>
+              <tbody id="itemsetRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="rules" class="panel">
+          <div class="panel-heading"><h2>Aturan Asosiasi</h2><span>Confidence</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Jika Membeli</th><th>Maka Cenderung Membeli</th><th>Support</th><th>Confidence</th><th>Lift</th></tr></thead>
+              <tbody id="ruleRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <footer class="app-footer">
+          <span>Hak Cipta Aplikasi</span>
+          <strong>By Hendri Irawan, M.Kom</strong>
+        </footer>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="pwa.js"></script>
+  </body>
+</html>
