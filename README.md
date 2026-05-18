@@ -55,12 +55,12 @@ PANDUAN_INSTALL_DESKTOP.md
 ## Format CSV
 
 ```csv
-transaction_id,medicine
-T001,Paracetamol
-T001,Vitamin C
-T001,Obat Batuk
-T002,Paracetamol
-T002,Vitamin C
+Kode_Transaksi;Nama_Obat
+T001;Paracetamol
+T001;Amoxilin
+T002;Paracetamol
+T002;Amoxilin
+T002;Vitamin C
 ```
 
 Satu baris berisi satu obat. Jika satu transaksi membeli tiga obat, ID transaksi ditulis tiga kali.

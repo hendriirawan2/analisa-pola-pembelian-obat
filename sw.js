@@ -1,4 +1,4 @@
-const CACHE_NAME = "apriori-obat-desktop-v1";
+const CACHE_NAME = "apriori-obat-desktop-v2";
 const APP_SHELL = [
   "./",
   "./index.html",

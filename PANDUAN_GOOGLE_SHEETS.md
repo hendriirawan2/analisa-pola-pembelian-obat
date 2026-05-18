@@ -19,12 +19,12 @@ Transaksi
 Isi header baris pertama:
 
 ```text
-transaction_id | medicine
+Kode_Transaksi | Nama_Obat
 ```
 
 Contoh tabel yang benar:
 
-| transaction_id | medicine |
+| Kode_Transaksi | Nama_Obat |
 |---|---|
 | T001 | Paracetamol |
 | T001 | Vitamin C |
@@ -37,12 +37,12 @@ Artinya:
 
 - Satu baris berisi satu obat.
 - Jika satu transaksi membeli 3 obat, maka ID transaksi ditulis 3 kali.
-- Nama kolom wajib paling aman adalah `transaction_id` dan `medicine`.
+- Nama kolom wajib paling aman adalah `Kode_Transaksi` dan `Nama_Obat`.
 
 Nama kolom alternatif yang masih bisa dibaca:
 
 ```text
-transaction_id, id_transaksi, transaksi, id
+kode_transaksi, transaction_id, id_transaksi, transaksi, id
 medicine, nama_obat, obat, item
 ```
 

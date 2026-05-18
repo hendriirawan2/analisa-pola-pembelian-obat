@@ -1,23 +1,23 @@
-const sampleCsv = `transaction_id,medicine
-T001,Paracetamol
-T001,Vitamin C
-T001,Obat Batuk
-T002,Paracetamol
-T002,Vitamin C
-T003,Obat Batuk
-T003,Vitamin C
-T004,Paracetamol
-T004,Obat Batuk
-T005,Paracetamol
-T005,Vitamin C
-T005,Obat Flu
-T006,Obat Flu
-T006,Vitamin C
-T007,Paracetamol
-T007,Vitamin C
-T007,Obat Batuk
-T008,Paracetamol
-T008,Obat Flu`;
+const sampleCsv = `Kode_Transaksi;Nama_Obat
+T001;Paracetamol
+T001;Amoxilin
+T002;Paracetamol
+T002;Amoxilin
+T002;Vitamin C
+T003;Obat Batuk
+T003;Vitamin C
+T004;Paracetamol
+T004;Obat Batuk
+T005;Paracetamol
+T005;Vitamin C
+T005;Obat Flu
+T006;Obat Flu
+T006;Vitamin C
+T007;Paracetamol
+T007;Vitamin C
+T007;Obat Batuk
+T008;Paracetamol
+T008;Obat Flu`;
 
 const state = {
   source: "Sample CSV",
@@ -89,7 +89,7 @@ function parseCsv(text) {
       i += 1;
     } else if (char === '"') {
       quoted = !quoted;
-    } else if (char === "," && !quoted) {
+    } else if ((char === "," || char === ";") && !quoted) {
       row.push(current.trim());
       current = "";
     } else if ((char === "\n" || char === "\r") && !quoted) {
@@ -107,7 +107,7 @@ function parseCsv(text) {
   if (rows.length < 2) return [];
 
   const headers = rows[0].map((h) => normalizeHeader(h));
-  const trxIndex = findIndex(headers, ["transaction_id", "id_transaksi", "transaksi", "id"], 0);
+  const trxIndex = findIndex(headers, ["kode_transaksi", "transaction_id", "id_transaksi", "transaksi", "id"], 0);
   const medIndex = findIndex(headers, ["medicine", "nama_obat", "obat", "item"], 1);
   const itemsIndex = findIndex(headers, ["items", "daftar_obat"], -1);
   const grouped = new Map();
@@ -379,7 +379,7 @@ function previewComplete() {
 }
 
 function downloadTemplate() {
-  const rows = [["transaction_id", "medicine"], ["T001", "Paracetamol"], ["T001", "Vitamin C"], ["T001", "Obat Batuk"], ["T002", "Obat Flu"]];
+  const rows = [["Kode_Transaksi", "Nama_Obat"], ["T001", "Paracetamol"], ["T001", "Amoxilin"], ["T002", "Paracetamol"], ["T002", "Amoxilin"], ["T002", "Vitamin C"]];
   downloadBlob(toCsv(rows), "template_transaksi_apotek_smf_1_duku.csv", "text/csv;charset=utf-8");
 }
 
@@ -568,7 +568,7 @@ function shortLabel(value) {
 }
 
 function toCsv(rows) {
-  return rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\r\n");
+  return rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(";")).join("\r\n");
 }
 
 function downloadBlob(content, filename, type) {

@@ -4,7 +4,7 @@ function doGet(event) {
   const sheet = getOrCreateSheet();
   const rows = sheet.getDataRange().getValues();
   const headers = rows[0].map((header) => normalizeHeader(header));
-  const transactionIndex = findHeaderIndex(headers, ["transaction_id", "id_transaksi", "transaksi", "id"], 0);
+  const transactionIndex = findHeaderIndex(headers, ["kode_transaksi", "transaction_id", "id_transaksi", "transaksi", "id"], 0);
   const medicineIndex = findHeaderIndex(headers, ["medicine", "nama_obat", "obat", "item"], 1);
   const dataRows = rows.slice(1);
   const transactions = dataRows
@@ -26,7 +26,7 @@ function doPost(event) {
   const sheet = getOrCreateSheet();
 
   sheet.clearContents();
-  sheet.appendRow(["transaction_id", "medicine"]);
+  sheet.appendRow(["Kode_Transaksi", "Nama_Obat"]);
 
   transactions.forEach((transaction) => {
     const transactionId = transaction.id || transaction.transaction_id;
@@ -52,7 +52,7 @@ function getOrCreateSheet() {
   }
 
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["transaction_id", "medicine"]);
+    sheet.appendRow(["Kode_Transaksi", "Nama_Obat"]);
   }
 
   return sheet;

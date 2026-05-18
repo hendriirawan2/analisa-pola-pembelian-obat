@@ -30,8 +30,10 @@ const dbElements = {
 
 let databaseRows = [
   { transaction_id: "T001", medicine: "Paracetamol" },
-  { transaction_id: "T001", medicine: "Vitamin C" },
-  { transaction_id: "T002", medicine: "Obat Batuk" },
+  { transaction_id: "T001", medicine: "Amoxilin" },
+  { transaction_id: "T002", medicine: "Paracetamol" },
+  { transaction_id: "T002", medicine: "Amoxilin" },
+  { transaction_id: "T002", medicine: "Vitamin C" },
 ];
 
 function renderDatabaseRows() {
@@ -188,9 +190,9 @@ async function saveToSheets() {
 
 function downloadCsv() {
   syncRowsFromTable();
-  const rows = [["transaction_id", "medicine"], ...databaseRows.map((row) => [row.transaction_id, row.medicine])];
+  const rows = [["Kode_Transaksi", "Nama_Obat"], ...databaseRows.map((row) => [row.transaction_id, row.medicine])];
   const csv = rows
-    .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","))
+    .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(";"))
     .join("\r\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
   const link = document.createElement("a");
